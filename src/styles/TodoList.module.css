@@ -32,3 +32,7 @@ button.addButton:hover {
   align-items: center;
   margin-bottom: 10px;
 }
+
+.titleimg {
+  text-align: center;
+}

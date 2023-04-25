@@ -8,7 +8,7 @@ import React from "react";
 import styles from "@/styles/TodoList.module.css";
 
 // TodoItem 컴포넌트를 정의합니다.
-const TodoItem = ({ todo, onToggle, onDelete }) => {
+const TodoItem = ({ todo, onToggle, onDelete, onModi }) => {
   // 각 할 일 항목을 렌더링합니다.
   return (
     <li className={styles.todoItem}>
@@ -33,7 +33,7 @@ const TodoItem = ({ todo, onToggle, onDelete }) => {
 
       <span className="ml-2 w-24 text-center">D-{todo.dday}</span>
 
-      <span className="ml-2 w-32 text-center">
+      <span className="ml-2 w-36 text-center">
         {todo.deadline.toString().substring(4, 15)}
       </span>
 
@@ -44,6 +44,10 @@ const TodoItem = ({ todo, onToggle, onDelete }) => {
       >
         ❌
       </button>
+
+      <button 
+        className="ml-2 w-16 bg-white text-white border rounded hover:bg-gray-300 hover:text-gray-500"
+        onClick={onModi}>✏️</button>
     </li>
   );
 };

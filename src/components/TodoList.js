@@ -14,6 +14,9 @@ const TodoList = () => {
   const [deadline, setDeadline] = useState("");
   const [category, setCategory] = useState("");
 
+  const [but,setbut]=useState('add');
+  const [modid,setmodid] =useState("")
+
   // addTodo 함수는 입력값을 이용하여 새로운 할 일을 목록에 추가하는 함수입니다.
   const addTodo = () => {
     // 입력값이 비어있는 경우 함수를 종료합니다.
@@ -32,27 +35,42 @@ const TodoList = () => {
     //   completed: 완료 여부,
     // }
     // ...todos => {id: 1, text: "할일1", completed: false}, {id: 2, text: "할일2", completed: false}}, ..
-    setTodos([
-      ...todos,
-      {
-        id: Date.now(),
-        text: input,
-        completed: false,
-        deadline: deadline,
-        category: category,
-        dday: Math.ceil(
-          (deadline - Date.now()) / (1000 * 60 * 60 * 24)
-        ).toString(),
-      },
-    ]);
-    setInput("");
-    setDeadline("");
-    setCategory("");
-    setIsButtonDisabled(true); // 버튼 비활성화
-    seterrorcode("");
-    setTimeout(() => {
-      setIsButtonDisabled(false); // 버튼 활성화
-    }, 1000);
+    if (but==="add"){
+      setTodos([
+        ...todos,
+        {
+          id: Date.now(),
+          text: input,
+          completed: false,
+          deadline: deadline,
+          category: category,
+          dday: Math.ceil(
+            (deadline - Date.now()) / (1000 * 60 * 60 * 24)
+          ).toString(),
+        },
+      ]);
+      setInput("");
+      setDeadline("");
+      setCategory("");
+      setIsButtonDisabled(true); // 버튼 비활성화
+      seterrorcode("");
+      setTimeout(() => {
+        setIsButtonDisabled(false); // 버튼 활성화
+      }, 1000);
+    } else {
+      setTodos(todos.map((todo)=>todo.id==modid? 
+      {...todo,text:input,deadline:deadline,category:category,dday: Math.ceil((deadline - Date.now()) / (1000 * 60 * 60 * 24)).toString(),}
+      :todo));
+      setInput("");
+      setDeadline("");
+      setCategory("");
+      setIsButtonDisabled(true); // 버튼 비활성화
+      seterrorcode("");
+      setTimeout(() => {
+        setIsButtonDisabled(false); // 버튼 활성화
+      }, 1000);
+      setbut("add");setmodid("");
+    }
   };
 
   // toggleTodo 함수는 체크박스를 눌러 할 일의 완료 상태를 변경하는 함수입니다.
@@ -69,15 +87,36 @@ const TodoList = () => {
     );
   };
 
+  const modiTodo = (id) => {
+    const selected=todos.filter((todo)=>todo.id===id)[0]
+    setInput(selected.text);
+    const now = new Date();
+    const dDayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + parseInt(selected.dday));
+    setDeadline(dDayDate);
+    setCategory(selected.category);
+    setbut("mod");
+    setmodid(id);
+  }
+
   // deleteTodo 함수는 할 일을 목록에서 삭제하는 함수입니다.
   const deleteTodo = (id) => {
     // 해당 id를 가진 할 일을 제외한 나머지 목록을 새로운 상태로 저장합니다.
     // setTodos(todos.filter((todo) => todo.id !== id));
-    setTodos(
-      todos.filter((todo) => {
-        return todo.id !== id;
-      })
-    );
+    if (but=="mod"){
+      const selected=todos.filter((todo)=>todo.id===modid)[0];
+      if (id===selected.id){ //변경 중인 일정이 삭제되는 경우 초기화
+        setInput("");
+        setDeadline("");
+        setCategory("");
+        setIsButtonDisabled(true); // 버튼 비활성화
+        seterrorcode("");
+        setTimeout(() => {
+          setIsButtonDisabled(false); // 버튼 활성화
+        }, 1000);
+        setbut("add");setmodid("");
+      }
+    }
+    setTodos(todos.filter((todo)=>todo.id!==id));
   };
 
   const handleKeyPress = (e) => {
@@ -115,7 +154,6 @@ const TodoList = () => {
           <option value="Study">Study</option>
           <option value="Exercise">Exercise</option>
           <option value="__other">입력하기 ...</option>
-          {/*추가*/}
           {["Work","Study","Exercise","__other",""].includes(category)? "":<option value={category}>{category}</option>}
         </select>
 
@@ -138,14 +176,17 @@ const TodoList = () => {
         />
 
         <button
-          className={`w-1/5 hover:shadow-lg justify-self-end p-1 ml-3 mb-4 bg-blue-500 text-white border border-blue-500 rounded hover:bg-white hover:text-blue-500 ${
+          className={but=='add'? `w-12 hover:shadow-lg justify-self-end p-1 ml-3 mb-4 bg-blue-500 text-white border border-blue-500 rounded hover:bg-white hover:text-blue-500 ${
+            isButtonDisabled &&
+            "bg-red-500 border-red-500 hover:bg-red hover:text-red-500 cursor-not-allowed"
+          }`:`w-12 hover:shadow-lg justify-self-end p-1 ml-3 mb-4 bg-green-500 text-white border border-green-500 rounded hover:bg-white hover:text-green-500 ${
             isButtonDisabled &&
             "bg-red-500 border-red-500 hover:bg-red hover:text-red-500 cursor-not-allowed"
           }`}
           onClick={addTodo}
           disabled={isButtonDisabled}
         >
-          Add
+          {but}
         </button>
       </li>
 
@@ -159,12 +200,13 @@ const TodoList = () => {
 
       <li className="mb-1">
         <div className={`${borderStyle} w-12`}>✔</div>
-        <div className={`${borderStyle} ml-2 w-24`}>분류</div>
+        <div className={`${borderStyle} ml-1 w-20`}>분류</div>
 
-        <div className={`${borderStyle} ml-2 w-64`}>Todo</div>
-        <button className={`${borderStyle} ml-2 w-24`}>D-Day</button>
-        <div className={`${borderStyle} ml-2 w-32`}>마감일</div>
-        <div className={`${borderStyle} ml-2 w-16`}>제거</div>
+        <div className={`${borderStyle} ml-1 w-60`}>Todo</div>
+        <button className={`${borderStyle} ml-1 w-20`}>D-Day</button>
+        <div className={`${borderStyle} ml-1 w-32`}>마감일</div>
+        <div className={`${borderStyle} ml-1 w-16`}>제거</div>
+        <div className={`${borderStyle} ml-1 w-16`}>수정</div>
       </li>
 
       {/* 할 일 목록을 렌더링합니다. */}
@@ -175,6 +217,7 @@ const TodoList = () => {
             todo={todo}
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
+            onModi={()=>modiTodo(todo.id)}
           />
         ))}
       </ul>

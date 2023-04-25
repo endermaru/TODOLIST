@@ -115,6 +115,7 @@ const TodoList = () => {
           <option value="Study">Study</option>
           <option value="Exercise">Exercise</option>
           <option value="__other">입력하기 ...</option>
+          {/*추가*/}
           {["Work","Study","Exercise","__other",""].includes(category)? "":<option value={category}>{category}</option>}
         </select>
 

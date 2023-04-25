@@ -103,18 +103,19 @@ const TodoList = () => {
           selected={category}
           onKeyPress={handleKeyPress}
           onChange={(e) => {
-            if (e.target.value === "other") {
+            if (e.target.value === "__other") {
               setCategory(prompt("Please enter a category"));
             } else {
               setCategory(e.target.value);
             }
           }}
-        >
-          <option value="">Select</option>
+        > 
+          <option value="" selected>Select</option>
           <option value="Work">Work</option>
           <option value="Study">Study</option>
           <option value="Exercise">Exercise</option>
-          <option value="other">입력하기 ...</option>
+          <option value="__other">입력하기 ...</option>
+          {["Work","Study","Exercise","__other",""].includes(category)? "":<option value={category}>{category}</option>}
         </select>
 
         <input

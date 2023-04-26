@@ -17,6 +17,32 @@ const TodoList = () => {
   const [but,setbut]=useState('add');
   const [modid,setmodid] =useState("")
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetch('/api/todo')
+        .then((res) => res.json())
+        .then((data) => setTodos(data))
+        .catch((err) => console.log(err));
+    }, 1000);
+    
+    return () => clearInterval(intervalId); // 언마운트 시 intervalId 클리어
+  }, []);
+
+  const postTodo = (todoList) => {
+    fetch('/api/todo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ todo: todoList })
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+      })
+  }
+
+  postTodo(todos)
+  
+
   // addTodo 함수는 입력값을 이용하여 새로운 할 일을 목록에 추가하는 함수입니다.
   const addTodo = () => {
     // 입력값이 비어있는 경우 함수를 종료합니다.

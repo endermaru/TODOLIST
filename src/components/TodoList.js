@@ -13,6 +13,7 @@ const TodoList = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [deadline, setDeadline] = useState("");
   const [category, setCategory] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
 
   const [but,setbut]=useState('add');
   const [modid,setmodid] =useState("")
@@ -244,11 +245,13 @@ const TodoList = () => {
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             onModi={()=>modiTodo(todo.id)}
+            darkMode={darkMode}
           />
         ))}
       </ul>
     </div>
   );
+
 };
 
 export default TodoList;

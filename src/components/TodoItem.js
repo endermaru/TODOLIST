@@ -8,10 +8,11 @@ import React from "react";
 import styles from "@/styles/TodoList.module.css";
 
 // TodoItem 컴포넌트를 정의합니다.
-const TodoItem = ({ todo, onToggle, onDelete, onModi }) => {
+const TodoItem = ({ todo, onToggle, onDelete, onModi, darkMode }) => {
   // 각 할 일 항목을 렌더링합니다.
   return (
-    <li className={styles.todoItem}>
+    // `darkMode`가 true일 경우 "dark" 클래스를 추가하기
+    <li className={`${styles.todoItem} ${darkMode ? "dark" : ""}`}>
       {/* 체크박스를 렌더링하고, 체크박스의 상태를 할 일의 완료 상태와 동기화합니다.
           체크박스의 상태가 변경되면 onToggle 함수를 호출하여 완료 상태를 업데이트합니다. */}
       <input

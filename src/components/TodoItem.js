@@ -13,6 +13,9 @@ const TodoItem = ({ todo, onToggle, onDelete, onModi, darkMode }) => {
   return (
     // `darkMode`가 true일 경우 "dark" 클래스를 추가하기
     <li className={`${styles.todoItem} ${darkMode ? "dark" : ""}`}>
+      {/* 다크모드 토글 버튼 */}
+       <button onClick={toggleDarkMode}>{darkMode ? "Light" : "Dark"} Mode</button>
+       
       {/* 체크박스를 렌더링하고, 체크박스의 상태를 할 일의 완료 상태와 동기화합니다.
           체크박스의 상태가 변경되면 onToggle 함수를 호출하여 완료 상태를 업데이트합니다. */}
       <input

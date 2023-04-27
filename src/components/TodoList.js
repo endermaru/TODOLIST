@@ -17,24 +17,6 @@ const TodoList = () => {
   const [but,setbut]=useState('add');
   const [modid,setmodid] =useState("")
 
-    return (
-      <div className={`${styles.todoList}`}>
-  
-        {/* TodoItem 컴포넌트들 */}
-        <ul>
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={() => console.log("onToggle")}
-              onDelete={() => console.log("onDelete")}
-              onModi={() => console.log("onModi")}
-            />
-          ))}
-        </ul>
-      </div>
-    );
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetch('/api/todo')

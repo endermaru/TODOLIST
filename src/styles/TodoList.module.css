@@ -42,15 +42,3 @@ button.addButton:hover {
   background-color: #222;
   color: #fff;
 }
-
-.dark-mode-toggle {
-  background-color: #333;
-  color: #fff;
-  font-size: 16px;
-}
-
-.light-mode-toggle {
-  background-color: #fff;
-  color: #333;
-  font-size: 16px;
-}

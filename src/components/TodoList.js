@@ -13,18 +13,12 @@ const TodoList = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [deadline, setDeadline] = useState("");
   const [category, setCategory] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
 
   const [but,setbut]=useState('add');
   const [modid,setmodid] =useState("")
 
-    // 다크모드 토글 함수
-    const toggleDarkMode = () => {
-      setDarkMode(!darkMode);
-    };
-  
     return (
-      <div className={`${styles.todoList} ${darkMode ? "dark" : ""}`}>
+      <div className={`${styles.todoList}`}>
   
         {/* TodoItem 컴포넌트들 */}
         <ul>
@@ -35,7 +29,6 @@ const TodoList = () => {
               onToggle={() => console.log("onToggle")}
               onDelete={() => console.log("onDelete")}
               onModi={() => console.log("onModi")}
-              darkMode={darkMode} // 다크모드 상태를 전달합니다.
             />
           ))}
         </ul>
@@ -183,14 +176,6 @@ const TodoList = () => {
       <h1 className="text-xl mb-7 font-bold underline underline-offset-4 decoration-wavy">
         Todo List
       </h1>
-
-      {/* 다크모드 토글 버튼 */}
-      <button 
-        onClick={toggleDarkMode}
-        style = {{width:"40px", height: "40px"}}
-        className="absolute top-5 right-5"
-        >
-        {darkMode ? "Light" : "Dark"} Mode</button>
 
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
 

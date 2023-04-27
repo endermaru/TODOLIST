@@ -36,21 +36,3 @@ button.addButton:hover {
 .titleimg {
   text-align: center;
 }
-
-/* 다크모드 스타일 */
-.dark {
-  background-color: #222;
-  color: #fff;
-}
-
-.dark-mode-toggle {
-  background-color: #333;
-  color: #fff;
-  font-size: 16px;
-}
-
-.light-mode-toggle {
-  background-color: #fff;
-  color: #333;
-  font-size: 16px;
-}

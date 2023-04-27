@@ -25,8 +25,6 @@ const TodoList = () => {
   
     return (
       <div className={`${styles.todoList} ${darkMode ? "dark" : ""}`}>
-        {/* 다크모드 토글 버튼 */}
-        <button onClick={toggleDarkMode}>{darkMode ? "Light" : "Dark"} Mode</button>
   
         {/* TodoItem 컴포넌트들 */}
         <ul>
@@ -186,6 +184,14 @@ const TodoList = () => {
         Todo List
       </h1>
 
+      {/* 다크모드 토글 버튼 */}
+      <button 
+        onClick={toggleDarkMode}
+        style = {{width:"40px", height: "40px"}}
+        className="absolute top-5 right-5"
+        >
+        {darkMode ? "Light" : "Dark"} Mode</button>
+
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
 
       <li className="mb-1">
@@ -271,7 +277,6 @@ const TodoList = () => {
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
             onModi={()=>modiTodo(todo.id)}
-            darkMode={darkMode}
           />
         ))}
       </ul>

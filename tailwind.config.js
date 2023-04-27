@@ -7,7 +7,12 @@ module.exports = {
     // "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        title: ["Abril Fatface", "cursive"],
+        body: ["Noto Sans KR", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

@@ -18,6 +18,32 @@ const TodoList = () => {
   const [but,setbut]=useState('add');
   const [modid,setmodid] =useState("")
 
+    // 다크모드 토글 함수
+    const toggleDarkMode = () => {
+      setDarkMode(!darkMode);
+    };
+
+    return (
+      <div className={`${styles.todoList} ${darkMode ? "dark" : ""}`}>
+      {/* 다크모드 토글 버튼 */}
+      <button onClick={toggleDarkMode}>{darkMode ? "Light" : "Dark"} Mode</button>
+
+      {/* TodoItem 컴포넌트들 */}
+      <ul>
+        {todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={() => console.log("onToggle")}
+            onDelete={() => console.log("onDelete")}
+            onModi={() => console.log("onModi")}
+            darkMode={darkMode} // 다크모드 상태를 전달합니다.
+          />
+        ))}
+      </ul>
+    </div>
+  );
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetch('/api/todo')
@@ -39,7 +65,7 @@ const TodoList = () => {
       .then(data => {
         console.log(data.message);
       })
-  }
+  };
 
   postTodo(todos)
   
@@ -112,7 +138,7 @@ const TodoList = () => {
         return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
       })
     );
-  };
+  }
 
   const modiTodo = (id) => {
     const selected=todos.filter((todo)=>todo.id===id)[0]
